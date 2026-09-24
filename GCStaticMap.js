@@ -1,0 +1,122 @@
+import React, { Component } from 'react'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { Platform } from 'react-native'
+import { Marker } from 'react-native-maps';
+import { COLORS } from 'DWcmn/Global'
+
+
+//20221124 moved into its own file
+//20260212 fixed for iOS - map zoomed out for world map...recommended from chatGPT using camera instead of initialRegion is more stable
+
+
+//CLAUDE see notes below
+// The iOS branch ignores height and delta. It hard-codes height: 200 and latitudeDelta: 0.002, 
+// while Android honours both props. That means both checkout screens, which pass height={150}, 
+// get a 150 px map on Android and a 200 px one on iOS. If that came with the 2026-02-12 iOS fix, 
+// it may have been deliberate. If not, it's a quiet inconsistency.
+
+// region versus initialRegion. iOS uses the controlled region prop and Android uses initialRegion,
+//  which only applies at mount. That's why Android needs recenterMap when the address changes.
+//   iOS follows the location prop by itself, so recenterMap is probably redundant there, though harmless.
+
+// recenterMap assumes _mapRef is set. Both parents guard on the ref existing, so it's fine today.
+
+// Dead weight. There's a large commented-out initialCamera block, and showsMyLocationButton={true}
+//  on Android does nothing while showsUserLocation is false.
+////////////////////////////////////////////////////////////////////////////////
+
+//GCStaticMap displays a map that is display only
+//It displays a map centred on a location (and by default displaying a pin)
+//prop location (contains latitude and longitude)  default 0,0
+//prop height default 100
+//prop delta default .002 (degrees of latitude displayed in map)
+//prop noPin default false (true iff no pin to be displayed)
+//prop style
+//prop ref(component) optionally receive a reference to the component
+export class GCStaticMap extends Component {
+   constructor() {
+      super();
+      this._mapRef = null
+   } //end constuctor
+
+   render() {
+      let location = this.props.location || { latitude: 0, longitude: 0 }
+      let height = this.props.height || 100
+      return (
+         Platform.OS === 'android' ?
+                     <MapView
+               provider={PROVIDER_GOOGLE} //for ios
+               ref={(component) => this._mapRef = component}
+               style={[{ flex: 0, height: height }, this.props.style]}
+               toolbarEnabled={false}
+               showsUserLocation={false}
+               showsMyLocationButton={true}
+               moveOnMarkerPress={false}
+               zoomEnabled={false}
+               zoomTapEnabled={false}
+               zoomControlEnabled={false}
+               scrollEnabled={false}
+               initialRegion={{
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  latitudeDelta: this.props.delta || 0.002,
+                  longitudeDelta: 0.0,
+               }}>
+               {this.props.noPin || <Marker pinColor={COLORS.GC_ICON_MAP_THEME_DARK} coordinate={location} />}
+            </MapView>
+
+            :<MapView
+               provider={PROVIDER_GOOGLE}
+               ref={(component) => this._mapRef = component}
+               style={[{ flex: 0, height:200 }, this.props.style]}
+               toolbarEnabled={false}
+               showsUserLocation={false}
+               moveOnMarkerPress={false}
+               zoomEnabled={false}
+               zoomTapEnabled={false}
+               zoomControlEnabled={false}
+               scrollEnabled={false}
+               region={{
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  latitudeDelta:  0.002,
+                  longitudeDelta: 0.002,
+               }}         >
+               {this.props.noPin || <Marker pinColor={COLORS.GC_ICON_MAP_THEME_DARK} coordinate={location} />}
+            </MapView>             
+            // <MapView
+            //    provider={PROVIDER_GOOGLE}
+            //    ref={(component) => (this._mapRef = component)}
+            //    style={[{ flex: 0, height }, this.props.style]}
+            //    toolbarEnabled={false}
+            //    showsUserLocation={false}
+            //    moveOnMarkerPress={false}
+            //    zoomEnabled={false}
+            //    scrollEnabled={false}
+            //    initialCamera={{
+            //       center: {
+            //          latitude: location.latitude,
+            //          longitude: location.longitude,
+            //       },
+            //       pitch: 0,
+            //       heading: 0,
+            //       altitude: 0,
+            //       zoom: 16, // reliable zoom level
+            //    }}
+            // >
+            //    {!this.props.noPin && (
+            //       <Marker pinColor={COLORS.GC_ICON_MAP_THEME_DARK} coordinate={location}/>
+            //    )}
+            // </MapView>
+            
+
+      )
+   }
+
+   recenterMap(location) {
+      this._mapRef.animateCamera({ center: location });
+   }//end recenterMap
+
+
+}//end GCStaticMap
+
