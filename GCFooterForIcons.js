@@ -57,6 +57,7 @@ export class GCFooterWithTwoIcons extends Component {
 // or  back() 
 //prop hide
 //NOTE does NOT pass any other properties to GCFooter
+//TODO check color is NOT used in GCFooter
 class GCFooterForIcons extends Component {
 
    render() {

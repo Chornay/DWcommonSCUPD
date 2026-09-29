@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { StyleSheet, Dimensions, TextInput} from 'react-native'
+// import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import { StyleSheet, Dimensions, View, Text, TextInput } from 'react-native'
 import { COLORS } from 'DWcmn/Global'
 
 
-//generic text input -- replaces native-base's <Input>
+//generic text input -- replaces native base's <Input>
 //prop value / defaultValue (controlled vs uncontrolled, same as TextInput)
 //prop onChangeText(text)
 //prop placeholder
@@ -20,8 +22,8 @@ export class PrjInput extends Component {
       <TextInput
         ref={inputRef}
         style={[
-          { color: COLORS.GC_PULLUP_TEXT, backgroundColor:'red'},
-          multiline && styles.inputMultiline,style
+          { color: COLORS.GC_PULLUP_TEXT },
+          multiline && styles.inputMultiline, style
         ]}
         placeholderTextColor={COLORS.GC_PULLUP_PLACEHOLDER}
         multiline={multiline}
@@ -32,9 +34,42 @@ export class PrjInput extends Component {
   }
 }
 
+export function PrjLabelledInput({ label, field, onEndEditing }) {
+  const valueRef = useRef(field);
+
+  return (
+    <View
+      style={{
+        backgroundColor: 'white',
+        paddingLeft: 10,
+        justifyContent: 'center',
+        borderRadius: 10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+      }}
+    >
+      <Text style={styles.label}>{label}</Text>
+      <TextInput
+        defaultValue={field}
+        style={{ justifyContent: 'center', alignItems: 'center', padding: 0, color: 'black' }}
+        onChangeText={(val) => (valueRef.current = val)}
+        onEndEditing={async () => await onEndEditing(valueRef.current)}
+      />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-inputMultiline: {
-   minHeight: 80,
-   paddingVertical: 8,
-},
+  inputMultiline: {
+    minHeight: 80,
+    paddingVertical: 8,
+  },
+  label: {
+    fontSize: 12,
+    color: '#757575',
+    marginBottom: 4,
+  },
 })

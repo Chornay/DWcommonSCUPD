@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { Platform } from 'react-native'
-import { Fab } from 'native-base'
 import { Text } from 'react-native'
 import GLOBALS from 'DWcmn/Global';
 import { COLORS, ICONS } from 'DWcmn/Global'
@@ -141,44 +140,6 @@ export class PrjIconButton extends Component {
   }
 }
 
-//prop onPress()
-export class PrjFabMapShowAll extends Component {
-  render() {
-    return (
-      <Fab
-        active={true}
-        containerStyle={{}}
-        style={[styles.fabButtonShape, { backgroundColor: COLORS.GC_MAP_FAB_SHOWALL }]}
-        position="topRight"
-        onPress={this.props.onPress}
-      >
-        <PrjIcon id="MAP_SHOW_ALL" />
-      </Fab>
-
-    )
-  }
-}
-
-//prop position (default topRight) //NOTE bottom does not work in CmnAddressOrStopInput
-//prop color (default COLORS.GC_MAP_FAB_SHOWALL)
-//prop onPress()
-export class PrjFabMapCurrPos extends Component {
-  render() {
-    return (
-      <Fab
-        active={true}
-        containerStyle={{}}
-        style={[styles.fabButtonShape, { backgroundColor: this.props.color || COLORS.GC_MAP_FAB_SHOWALL }]}
-        position={this.props.position || "topRight"}
-        onPress={this.props.onPress}
-      >
-        <PrjIcon id="MAP_SHOW_ALL" />
-      </Fab>
-
-    )
-  }
-}
-
 //prop size the height of the spacer
 export class PrjSpacer extends Component {
   render() {
@@ -206,17 +167,17 @@ export class PrjMapIcon extends Component {
       case OrderStatusEnum.assignedForPickup:
       case OrderStatusEnum.outForPickup:
         return (<PrjIcon id={"PIN_ACTIVE"} color={GLOBALS.COLOR.STATUS_PICKING_UP} />);
-        case OrderStatusEnum.pickedUp:
-          case OrderStatusEnum.missedPickup:
-            return (<PrjIcon id={"PIN_DONE"} color={GLOBALS.COLOR.STATUS_PICKED_UP} />);
+      case OrderStatusEnum.pickedUp:
+      case OrderStatusEnum.missedPickup:
+        return (<PrjIcon id={"PIN_DONE"} color={GLOBALS.COLOR.STATUS_PICKED_UP} />);
       case OrderStatusEnum.atShop:
       case OrderStatusEnum.inShop:
         return null
       case OrderStatusEnum.readyForDelivery:
       case OrderStatusEnum.assignedForDelivery:
       case OrderStatusEnum.outForDelivery:
-        case OrderStatusEnum.missedDelivery:
-          return (<PrjIcon id={"PIN_ACTIVE"} color={GLOBALS.COLOR.STATUS_DELIVERING} />);
+      case OrderStatusEnum.missedDelivery:
+        return (<PrjIcon id={"PIN_ACTIVE"} color={GLOBALS.COLOR.STATUS_DELIVERING} />);
       case OrderStatusEnum.delivered:
       case OrderStatusEnum.confirmed:
       case OrderStatusEnum.completed:

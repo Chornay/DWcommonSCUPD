@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-// import { Icon } from 'native-base'
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -42,7 +42,7 @@ export class PrjIcon extends Component {
             return null
          }
 
-         // native-base read size from style.fontSize; vector-icons wants an
+         // native base read size from style.fontSize; vector-icons wants an
          // explicit "size" prop, so pull fontSize out of whatever style was passed.
          const flatStyle = StyleSheet.flatten(this.props.style) || {}
          const size = flatStyle.fontSize || 24
@@ -80,7 +80,7 @@ export class PrjIconWithShadow extends Component {
    } //end render
 } //end PrjIconBK
 
-//20250526 replaced native-base button
+//20250526 replaced native base button
 export class PrjIconWithText extends Component {
    render() {
 

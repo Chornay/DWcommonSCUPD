@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import { ListItem, Left, Right } from 'native-base';
+
+import { ListItemGBC, ListItemRight, ListItemBody, ListItemLeft } from 'DWcmn/PrjNativeBase'
 import Modal from "react-native-modal";
 
 import GLOBALS from 'DWcmn/Global';
@@ -20,36 +21,36 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window') || {};
 // the component does not control its own visibility, the wrapper class is expected to do so
 export default class CmnSettingsModal extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-        };
-    }
+   constructor() {
+      super();
+      this.state = {
+      };
+   }
 
 
-    render() {
+   render() {
 
-        return (
-            <View>
-                <Modal
-                    avoidKeyboard={true} //for ios modal doesn't hide under keyboard 
-                    isVisible={true}
-                    animationIn='slideInRight'
-                    animationOut='slideOutRight'
-                    onSwipeComplete={this.props.onDone}
-                    swipeDirection="right"
-                >
-                    <View style={[styles.modal, this.props.style]}>
-                        <View style={{ flex: .1 }}>
-                            <GCHeader titleI18n="cmn.SETTINGS" />
-                        </View>
-                        {this.props.children}
-                    </View>
+      return (
+         <View>
+            <Modal
+               avoidKeyboard={true} //for ios modal doesn't hide under keyboard 
+               isVisible={true}
+               animationIn='slideInRight'
+               animationOut='slideOutRight'
+               onSwipeComplete={this.props.onDone}
+               swipeDirection="right"
+            >
+               <View style={[styles.modal, this.props.style]}>
+                  <View style={{ flex: .1 }}>
+                     <GCHeader titleI18n="cmn.SETTINGS" />
+                  </View>
+                  {this.props.children}
+               </View>
 
-                </Modal>
-            </View>
-        );
-    } //end render
+            </Modal>
+         </View>
+      );
+   } //end render
 
 } //end CmnSettingsModal
 
@@ -62,70 +63,66 @@ export default class CmnSettingsModal extends Component {
 
 export function settingsField(title) {
 
-    return (
-        <ListItem>
-            <TouchableOpacity
-                style={{ flexDirection: 'row', paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}
-                onPress={() => { }}>
-                <Left style={{}}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-start' }}>
-                        <View style={{ paddingLeft: 20 }} />
-                        <GCText style={{ color: 'white', marginLeft: -20 }}>{title}</GCText>
-                    </View>
-                </Left>
-                <Right style={{}}>
-                    {/* <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"} /> */}
-                    <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"}
-                    />
-                </Right>
-            </TouchableOpacity>
-        </ListItem>
-    );
+   return (
+      <ListItemGBC button
+         style={{ flexDirection: 'row', paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}
+         onPress={() => { }}>
+         <ListItemLeft style={{}}>
+            <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-start' }}>
+               <View style={{ paddingLeft: 20 }} />
+               <GCText style={{ color: 'white', marginLeft: -20 }}>{title}</GCText>
+            </View>
+         </ListItemLeft>
+         <ListItemRight style={{}}>
+            {/* <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"} /> */}
+            <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"}
+            />
+         </ListItemRight>
+      </ListItemGBC>
+   );
 }// end settingsField
 
 
 class CstTermsOfUse extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-        };
-    }
-    render() {
+   constructor() {
+      super();
+      this.state = {
+      };
+   }
+   render() {
 
-        return (
-            <ListItem>
-                <TouchableOpacity
-                    onPress={() => { this.props.onPress() }}>
-                    <Left style={{}}>
-                        <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-start' }}>
-                            <View style={{ paddingLeft: 20 }} />
-                            <GCText style={{ color: 'white', marginLeft: -20 }}>{this.props.text}</GCText>
-                        </View>
-                    </Left>
-                    <Right style={{}}>
-                        {/* <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"} /> */}
-                        <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"}
-                        />
-                    </Right>
-                </TouchableOpacity>
-            </ListItem>
-        );
-    } //end render
+      return (
+         <ListItemGBC button
+            onPress={() => { this.props.onPress() }}>
+            <ListItemLeft style={{}}>
+               <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-start' }}>
+                  <View style={{ paddingLeft: 20 }} />
+                  <GCText style={{ color: 'white', marginLeft: -20 }}>{this.props.text}</GCText>
+               </View>
+            </ListItemLeft>
+            <ListItemRight style={{}}>
+               {/* <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"} /> */}
+               <PrjIcon style={{ color: 'white' }} id={"ARROW_RIGHT"}
+               />
+            </ListItemRight>
+         </ListItemGBC>
+      );
+   } //end render
 } //end CstTermsOfUse
 
 
 const styles = StyleSheet.create({
-    modal: {
-        height: SCREEN_HEIGHT,
-        width: SCREEN_WIDTH,
-        backgroundColor: GLOBALS.COLOR.MODAL_CMD_BK,
-        margin: 0,
-        flex: 1,
-    },
-    listItem: {
-        borderBottomWidth: 0
-    }
+   modal: {
+      height: SCREEN_HEIGHT,
+      width: SCREEN_WIDTH,
+      backgroundColor: GLOBALS.COLOR.MODAL_CMD_BK,
+      margin: 0,
+      flex: 1,
+   },
+   listItem: {
+      borderBottomWidth: 0
+   }
 })
 
 

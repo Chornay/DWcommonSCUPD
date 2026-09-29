@@ -3,9 +3,10 @@ import { View, ScrollView, FlatList, TouchableOpacity, StyleSheet, Switch, } fro
 import { withNavigation } from 'react-navigation';
 import { Platform } from 'react-native'
 
-import { ListItem } from 'native-base';
+import { ListItemGBC, ListItemRight, ListItemBody, ListItemLeft } from 'DWcmn/PrjNativeBase'
 
 import { PrjIconButton } from 'DWcmn/Prj';
+import { PrjSliderSwitch } from 'DWcmn/PrjSliderSwitch'
 import { cmnFormatAPrice, cmnFormatAWeight, cmnFormatShortUnitPrice } from 'DWcmn/cmnFormatFunctions';
 import { prjDisplayServiceLevel, prjDisplayServiceSurchargePercentage } from 'DWcmn/PrjCmnFunctions'
 import { prjPriceListItemName } from 'DWcmn/PrjCmnFunctions'
@@ -131,7 +132,7 @@ export default class CmnItemsList extends Component {
             <ScrollView>
                <CmnServiceLevelBanner level={order.serviceLevel} style={{ height: 30 }} />
                {/* Column Titles */}
-               <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
+               <ListItemGBC noBorder  style={{ backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
                   <View style={{ flex: CmnItemsList.COL1, alignItems: 'flex-start' }}>
                      <GCI18n title code='cmn.Name' />
                   </View>
@@ -141,24 +142,24 @@ export default class CmnItemsList extends Component {
                   <View style={{ flex: CmnItemsList.COL3, alignItems: 'flex-end' }}>
                      <GCI18n title code='cmn.Net' />
                   </View>
-               </ListItem>
+               </ListItemGBC>
 
                {/* List all items in order */}
                {order.items.map((item) => { return (this.renderItem(order, item, itemIndex++)) })}
 
                {/* Coupon to apply if any */}
-               {order.couponStatus == 'applies' && <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: COLORS.GC_HIGHLIGHT_IMPORTANT }}>
+               {order.couponStatus == 'applies' && <ListItemGBC noBorder  style={{ backgroundColor: COLORS.GC_HIGHLIGHT_IMPORTANT }}>
                   <View style={{ flex: CmnItemsList.COL1 + CmnItemsList.COL2, alignItems: 'flex-start' }}>
                      <GCText fit list bold >{strX('cmnNEW.YourCouponAmount', { amount: cmnCouponFaceValueStr(order.coupon) })}</GCText>
                   </View>
                   <View style={{ flex: CmnItemsList.COL3, alignItems: 'flex-end' }}>
                      <GCText fit list bold>{cmnFormatAPrice(order.couponRedemption)}</GCText>
                   </View>
-               </ListItem>}
+               </ListItemGBC>}
 
                {/* Order surcharge if expedited service */}
                {order.serviceSurchargeAmount > 0 &&
-                  <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
+                  <ListItemGBC noBorder style={{ backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
                      <View style={{ flex: CmnItemsList.COL1 + CmnItemsList.COL2, alignItems: 'flex-end' }}>
                         <GCText title fit style={{ color: GLOBALS.COLOR.TEXT_ERROR }}>
                            {prjDisplayServiceLevel(order.serviceLevel)}
@@ -169,27 +170,27 @@ export default class CmnItemsList extends Component {
                      <View style={{ flex: CmnItemsList.COL3, alignItems: 'flex-end' }}>
                         <GCText fit list bold>{cmnFormatAPrice(order.serviceSurchargeAmount)}</GCText>
                      </View>
-                  </ListItem>}
+                  </ListItemGBC>}
 
                {/* Delivery Charge if any */}
-               {order.deliveryChargeToApply > 0 && <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: COLORS.GC_HIGHLIGHT_IMPORTANT }}>
+               {order.deliveryChargeToApply > 0 && <ListItemGBC noBorder style={{ backgroundColor: COLORS.GC_HIGHLIGHT_IMPORTANT }}>
                   <View style={{ flex: CmnItemsList.COL1 + CmnItemsList.COL2, alignItems: 'flex-start' }}>
                      <GCText fit list bold >{strX('cmnNEW.DeliveryChargeApplies', { min: cmnFormatAPrice(order.minFreeDelivery) })}</GCText>
                   </View>
                   <View style={{ flex: CmnItemsList.COL3, alignItems: 'flex-end' }}>
                      <GCText fit list bold>{cmnFormatAPrice(order.deliveryChargeToApply)}</GCText>
                   </View>
-               </ListItem>}
+               </ListItemGBC>}
 
                {/* Net Price (only if minimum charge has been applied) */}
-               {order.minChargeStatus == 'applies' && <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
+               {order.minChargeStatus == 'applies' && <ListItemGBC noBorder style={{ backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
                   <View style={{ flex: CmnItemsList.COL1 + CmnItemsList.COL2, alignItems: 'flex-end' }}>
                      <GCText fit list bold>{strX('cmnNEW.NetPrice')}</GCText>
                   </View>
                   <View style={{ flex: CmnItemsList.COL3, alignItems: 'flex-end' }}>
                      <GCText fit list bold>{cmnFormatAPrice(order.netPriceBeforeMinimum)}</GCText>
                   </View>
-               </ListItem>}
+               </ListItemGBC>}
 
                {/* Total Price */}
                {this.renderTotalPrice(order)}
@@ -212,9 +213,9 @@ export default class CmnItemsList extends Component {
                {appType == 'cst' && this.renderMinimumChargeWarning(order)}
 
                {/* if paid we give some details */}
-               {/* {(order.isPaid) && <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
+               {/* {(order.isPaid) && <ListItemGBC noBorder style={{ backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
                      {this.renderPaymentDetails(order)}
-               </ListItem>} */}
+               </ListItemGBC>} */}
                {(order.isPaid) && this.renderPaymentDetails(order)}
             </ScrollView>
          </View>
@@ -236,11 +237,11 @@ export default class CmnItemsList extends Component {
       }
       if (msg) {
          return (
-            <ListItem style={{ marginLeft: 0, paddingLeft: 0 }}>
+            <ListItemGBC >
                <View style={{ flex: 1, alignItems: 'center' }}>
                   <GCText list bold fit style={{ color: GLOBALS.COLOR.TEXT_ERROR }}>{msg}</GCText>
                </View>
-            </ListItem>
+            </ListItemGBC>
 
          )
       }
@@ -258,11 +259,11 @@ export default class CmnItemsList extends Component {
          order.totalPrice < order.minFreeDelivery) {
          const msg = strX('cmnNEW.MsgDeliveryChargeMayApply', { amount: cmnFormatAPrice(order.shopDeliveryCharge), min: cmnFormatAPrice(order.minFreeDelivery) })
          return (
-            <ListItem style={{ marginLeft: 0, paddingLeft: 0 }}>
+            <ListItemGBC >
                <View style={{ flex: 1, alignItems: 'center' }}>
                   <GCText list bold fit style={{ color: GLOBALS.COLOR.TEXT_ERROR }}>{msg}</GCText>
                </View>
-            </ListItem>
+            </ListItemGBC>
 
          )
       }
@@ -274,11 +275,11 @@ export default class CmnItemsList extends Component {
       // if (order.totalPrice >= order.minFreeDelivery) return null
       // const msg = strX('cmnNEW.MsgDeliveryChargeMayApply', { amount: cmnFormatAPrice(order.shopDeliveryCharge), min: cmnFormatAPrice(order.minFreeDelivery) })
       // return (
-      //    <ListItem style={{ marginLeft: 0, paddingLeft: 0 }}>
+      //    <ListItemGBC >
       //       <View style={{ flex: 1, alignItems: 'center' }}>
       //          <GCText list bold fit style={{ color: GLOBALS.COLOR.TEXT_ERROR }}>{msg}</GCText>
       //       </View>
-      //    </ListItem>
+      //    </ListItemGBC>
 
       // )
    }
@@ -291,11 +292,11 @@ export default class CmnItemsList extends Component {
       if (order.totalPrice >= order.minFreeDelivery) return null
       const msg = strX('cmnNEW.MsgServiceChargeWillApply', { percent: order.serviceSurchargePercent })
       return (
-         <ListItem style={{ marginLeft: 0, paddingLeft: 0 }}>
+         <ListItemGBC >
             <View style={{ flex: 1, alignItems: 'center' }}>
                <GCText list bold fit style={{ color: GLOBALS.COLOR.TEXT_ERROR }}>{msg}</GCText>
             </View>
-         </ListItem>
+         </ListItemGBC>
 
       )
    }
@@ -309,11 +310,11 @@ export default class CmnItemsList extends Component {
       if (order.totalPrice >= order.minCharge) return null
       const msg = strX('cmnNEW.MsgMinimumChargeMayApply', { amount: cmnFormatAPrice(order.minCharge) })
       return (
-         <ListItem style={{ marginLeft: 0, paddingLeft: 0 }}>
+         <ListItemGBC >
             <View style={{ flex: 1, alignItems: 'center' }}>
                <GCText list bold fit style={{ color: GLOBALS.COLOR.TEXT_ERROR }}>{msg}</GCText>
             </View>
-         </ListItem>
+         </ListItemGBC>
 
       )
    }
@@ -342,11 +343,11 @@ export default class CmnItemsList extends Component {
       }
       const msg = strX('cmnNEW.MsgDeliveryChargeMayApply', { amount: cmnFormatAPrice(order.shopDeliveryCharge), min: cmnFormatAPrice(order.minFreeDelivery) })
       return (
-         <ListItem style={{ marginLeft: 0, paddingLeft: 0 }}>
+         <ListItemGBC >
             <View style={{ flex: 1, alignItems: 'center' }}>
                <GCText list bold fit style={{ color: GLOBALS.COLOR.TEXT_ERROR }}>{strX(pricingWarning)}</GCText>
             </View>
-         </ListItem>
+         </ListItemGBC>
 
       )
    }
@@ -380,12 +381,12 @@ export default class CmnItemsList extends Component {
             </View>
       }
       return (
-         <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: bkgColor }}>
+         <ListItemGBC noBorder style={{ backgroundColor: bkgColor }}>
             {titleJSX}
             <View style={{ flex: CmnItemsList.COL3, alignItems: 'flex-end' }}>
                <GCText fit list bold >{cmnFormatAPrice(order.totalPrice)}</GCText>
             </View>
-         </ListItem>
+         </ListItemGBC>
 
 
       )
@@ -412,27 +413,24 @@ export default class CmnItemsList extends Component {
       //if isPriced is false we display a button for the shop to add quantity
 
       //NOTE if there are remarks then we don't want to have a thin line after the item
-      //because we will have the remarks ListItem that we want to 'join'
+      //because we will have the remarks ListItemGBC that we want to 'join'
       const specialBorderStyle = item.remarks ? styles.noBottomMargin : null
       // return (<GCText key={String(index)}>abcd</GCText>) //DEBUG
       return (
          // <View key={item.code} > //20220320 code was renamed key for convenience
          <View key={String(index)}>
-            <ListItem style={[{ marginLeft: 0, marginRight: 0 }, specialBorderStyle]}>
-               <TouchableOpacity
+            <ListItemGBC style={[ {flex: 1, flexDirection: 'row'} ,specialBorderStyle]}
                   disabled={order.isApproved || this.props.readonly || !requiresEditPopup}
-                  style={{ flex: 1, flexDirection: 'row', paddingLeft: CmnItemsList.PADDING_LEFT }}
                   onPress={() => {
                      this.setState({ displayPricingModal: true })
                      this.setState({ itemIndexForPricing: index })
                   }}
                >
                   {this.renderItemContents(item, index)}
-               </TouchableOpacity>
-            </ListItem>
-            {item.remarks && <ListItem style={{ paddingLeft: CmnItemsList.PADDING_LEFT }}>
+            </ListItemGBC>
+            {item.remarks && <ListItemGBC >
                <GCText list color={'grey'}>{item.remarks}</GCText>
-            </ListItem>}
+            </ListItemGBC>}
          </View>
       )
    } //end renderItem
@@ -503,7 +501,7 @@ export default class CmnItemsList extends Component {
          case 'EZnote': //no net-price
             if (!this.props.readonly) {
                output.push(<View key='3' style={{ flex: CmnItemsList.COL3, alignItems: 'flex-end', paddingVertical: 10 }}>
-                  <NewCheckBox
+                  <PrjSliderSwitch
                      checked={item.isPriced}
                      onPress={() => {
                         // console.log('B4 CHECKED', item.isPriced)
@@ -574,9 +572,9 @@ export default class CmnItemsList extends Component {
          case PaymentMethodEnum.paidPickup:
          case PaymentMethodEnum.paidDelivery:
             return (
-               <ListItem divider style={{ marginLeft: 0, paddingLeft: 0, backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
+               <ListItemGBC noBorder style={{ backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
                   {this.renderPaymentStatus(order.paymentMethod)}
-               </ListItem>
+               </ListItemGBC>
             )
             break
          case PaymentMethodEnum.paidOnline:

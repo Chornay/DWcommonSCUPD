@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { View, Dimensions, TouchableOpacity } from 'react-native'
 
 import { COLORS } from 'DWcmn/Global'

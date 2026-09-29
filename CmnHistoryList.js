@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, FlatList } from 'react-native'
 import moment from 'moment';
-import { ListItem, Left, Right } from 'native-base';
+import { ListItemGBC, ListItemRight, ListItemBody, ListItemLeft } from 'DWcmn/PrjNativeBase'
 import { PrjListText, PrjListTextHdr } from 'DWcmn/Prj';
 import { COLORS } from 'DWcmn/Global';
 import { strX } from 'DWcmn/I18n';
@@ -21,10 +21,10 @@ export default class CmnHistoryList extends Component {
     return (
       <View>
         {/* column headers */}
-        <ListItem divider style={{ marginLeft: 0, paddingLeft: 20, backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
-          <Left style={{ flex: COL1 }}><PrjListTextHdr>{strX('cmn.Time')}</PrjListTextHdr></Left>
-          <Right style={{ flex: COL2, alignItems: 'flex-start' }}><PrjListTextHdr>{strX('cmn.Action')}</PrjListTextHdr></Right>
-        </ListItem>
+        <ListItemGBC divider style={{ marginLeft: 0, paddingLeft: 20, backgroundColor: COLORS.GC_LIST_HDR_BKG }}>
+          <ListItemLeft style={{ flex: COL1 }}><PrjListTextHdr>{strX('cmn.Time')}</PrjListTextHdr></ListItemLeft>
+          <ListItemRight style={{ flex: COL2, alignItems: 'flex-start' }}><PrjListTextHdr>{strX('cmn.Action')}</PrjListTextHdr></ListItemRight>
+        </ListItemGBC>
         {/* data list */}
         <FlatList
           data={this.props.order.transactions}
@@ -43,8 +43,8 @@ export default class CmnHistoryList extends Component {
             return (
               <View>
               {(displayDateFlag)?
-              <ListItem style={{ flex: 1 }}>
-              <Left>
+              <ListItemGBC style={{ flex: 1 }}>
+              <ListItemLeft>
               {/* <PrjListText>{relativeDayString(new Date( ),item.transDate)}</PrjListText> */}
               {/* <PrjListText>{moment(item.transDate).format('dddd YY/MM/DD')}</PrjListText> */}
                       <PrjListText>{moment(item.transDate).calendar(null, {
@@ -56,16 +56,16 @@ export default class CmnHistoryList extends Component {
                         sameElse: 'L'
                       })
                       }</PrjListText>
-              </Left>
-              </ListItem>:null}
+              </ListItemLeft>
+              </ListItemGBC>:null}
 
-              <ListItem style={{ flex: 1 }}>
-                <Left style={{ flex: COL1 }}>
+              <ListItemGBC style={{ flex: 1 }}>
+                <ListItemLeft style={{ flex: COL1 }}>
                 <PrjListText>{moment(item.transDate).format('HH:mm')}</PrjListText>
                 {/* <PrjListText>{moment(item.transDate).format('YY/MM/DD HH:mm')}</PrjListText> */}
-                </Left>
-                <Right style={{ flex: COL2, alignItems: 'flex-start' }}><PrjListText>{dispStr}</PrjListText></Right>
-              </ListItem>
+                </ListItemLeft>
+                <ListItemRight style={{ flex: COL2, alignItems: 'flex-start' }}><PrjListText>{dispStr}</PrjListText></ListItemRight>
+              </ListItemGBC>
               </View>)
           }}
           keyExtractor={(item, index) => index.toString()}>

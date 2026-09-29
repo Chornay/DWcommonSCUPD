@@ -1,19 +1,9 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Dimensions, TextInput} from 'react-native'
-import { Platform } from 'react-native'
-import { Fab } from 'native-base'
-import { Text } from 'react-native'
-import GLOBALS from 'DWcmn/Global';
 import { COLORS, ICONS } from 'DWcmn/Global'
-import { strX } from 'DWcmn/I18n';
-import { OrderStatusEnum } from 'DWcmn/Global';
 import { PrjIcon } from 'DWcmn/PrjIconComponents'
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window') || {};
-const { height: SCREEN_HEIGHT } = Dimensions.get('window') || {};
-
-
-//generic single-button Fab -- replaces native-base's <Fab>
+//generic single-button Fab -- replaces native base's <Fab>
 //prop icon .. id passed to PrjIcon
 //prop color .. background color of the button
 //prop position .. topRight (default) | topLeft | bottomRight | bottomLeft

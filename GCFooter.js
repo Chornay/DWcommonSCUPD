@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { withNavigation } from 'react-navigation';
-import { Footer, Left, Body, Right } from 'native-base'
+import { FooterGBC, FooterLeft, FooterBody, FooterRight } from 'DWcmn/PrjNativeBase'
 
 import { COLORS } from 'DWcmn/Global'
 import { PRJ_STYLES } from 'DWcmn/PrjStyles'
@@ -36,10 +36,10 @@ class GCFooter extends Component {
          return (
             //20250822 added SafeAreaView - edges for pusing up footer above navigation bar at the bottom 
             //...Otherwise footer hides navigation bar at the bottom for new samsung devices
-            <SafeAreaView edges={['bottom']} style={{backgroundColor:color, paddingTop:0}}>
-               <Footer style={[{ height: height, backgroundColor: color }, styles.footer, this.props.style]}>
-               {this.props.children}
-            </Footer>
+            <SafeAreaView edges={['bottom']} style={{ backgroundColor: color, paddingTop: 0 }}>
+               <FooterGBC style={[{ height: height, backgroundColor: color }, this.props.style]}>
+                  {this.props.children}
+               </FooterGBC>
             </SafeAreaView>
          )
       }
@@ -48,17 +48,17 @@ class GCFooter extends Component {
             //20250822 added SafeAreaView - edges for pusing up footer above navigation bar at the bottom 
             //...Otherwise footer hides navigation bar at the bottom for new samsung devices
             <SafeAreaView edges={['bottom']}>
-               <Footer style={[{ height: height, backgroundColor: color }, styles.footer, this.props.style]}>
-               <Left style={styles.left}>
-                  <PrjIconButton id='ARROW_BACK_FOOTER'
-                     onPress={() => {
-                        if (typeof this.props.back === 'function') { this.props.back() }
-                        else { this.props.navigation.goBack() }
-                     }} />
-               </Left>
-               <Body buttons style={styles.body}>{this.props.children}</Body>
-               <Right style={styles.right} />
-            </Footer>
+               <FooterGBC style={[{ height: height, backgroundColor: color }, this.props.style]}>
+                  <FooterLeft>
+                     <PrjIconButton id='ARROW_BACK_FOOTER'
+                        onPress={() => {
+                           if (typeof this.props.back === 'function') { this.props.back() }
+                           else { this.props.navigation.goBack() }
+                        }} />
+                  </FooterLeft>
+                  <FooterBody buttons>{this.props.children}</FooterBody>
+                  <FooterRight />
+               </FooterGBC>
             </SafeAreaView>
          )
       }

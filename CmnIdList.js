@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 
 import { APP } from 'DWcmn/APP'
-import { ListItemXYZ } from 'DWcmn/GCNB'
+import { ListItemGBC, ListItemRight, ListItemBody, ListItemLeft } from 'DWcmn/PrjNativeBase'
 import { PrjListText } from 'DWcmn/Prj';
 import { GCText, GCI18n } from 'DWcmn/Gc'
 import { cmnOrderStatusColor, cmnOrderStatusStr } from 'DWcmn/TypeCmnFunctions'
@@ -42,11 +42,11 @@ export default class CmnIdList extends Component {
     const COL2 = .7
     return (
       <View>
-        <ListItemXYZ style={{ marginLeft: 0 }}>
+        <ListItemGBC style={{ marginLeft: 0 }}>
           <View style={{ flex: COL1 }}><GCI18n code={left} /></View>
           {(styled) ? <View style={{ flex: COL2 }}>{right}</View> :
             <View style={{ flex: COL2 }}><GCText>{right}</GCText></View>}
-        </ListItemXYZ>
+        </ListItemGBC>
       </View>)
   }
 }// end CmnIdList

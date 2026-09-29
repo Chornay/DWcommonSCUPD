@@ -6,7 +6,7 @@ import { COLORS } from 'DWcmn/Global'
 import { PRJ_STYLES } from 'DWcmn/PrjStyles'
 import { strX } from 'DWcmn/I18n';
 import { GCText, GCI18n } from 'DWcmn/Gc'
-import { PrjInput } from 'DWcmn/Prj'
+import { PrjInput } from 'DWcmn/PrjInput'
 
 import { dwdbfsOrderUpdateItemPricing } from 'DWcmn/dwdbfsOrder'
 import { prjUpdateOrderPricing } from 'DWcmn/prjUpdateOrderPricing'
