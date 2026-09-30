@@ -181,6 +181,16 @@ export async function dwdbfsOrderGetByQrCode(qrCode) {
    catch (error) { prjAlert(error.message); return null }
 }// end dwdbfsOrderGetByQrCode
 
+export async function dwdbfsOrderGetByQrCodeThrows(qrCode) {
+      const querySnapshot = await firestore().collection('Orders').where('codeFromQr', "==", qrCode.toString()).limit(1).get();
+      if (querySnapshot.empty) {
+         return null
+      }
+      else {
+         return dwdbfsOrderExtract(querySnapshot.docs[0].data())
+      }
+}// end dwdbfsOrderGetByQrCodeThrows
+
 //throws errors
 export async function dwdbfsOrderGetCustHistoryAsArray(custId) {
    const querySnapshot = await firestore().collection("Orders")

@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
-import { StyleSheet } from 'react-native';
+import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { withNavigation } from 'react-navigation';
 import { FooterGBC, FooterLeft, FooterBody, FooterRight } from 'DWcmn/PrjNativeBase'
+import { useNavigation } from 'DWcmn/PrjNav5Wrapper'
 
 import { COLORS } from 'DWcmn/Global'
-import { PRJ_STYLES } from 'DWcmn/PrjStyles'
 
 import { PrjIconButton } from 'DWcmn/Prj'
 
@@ -19,74 +17,47 @@ import { PrjIconButton } from 'DWcmn/Prj'
 //prop style
 //prop height
 //prop color
-//TODO check the styling ... seems to be some extra PRJ_STYLES.footerbkg hanging around
-//     and buttons does the necessary stuff anyhow?
 //NOTE this footer is coloured with the default project colour
 //     to display simple icons in the footer use GCFooterTransparent
 
-class GCFooter extends Component {
+function GCFooter({ hide, height, back, color, style, children }) {
+   const navigation = useNavigation()
 
-   render() {
+   if (hide) { return null }
 
-      if (this.props.hide) { return null }
+   const finalHeight = height || 60
+   const finalColor = color || COLORS.GC_FOOTER_BKG
 
-      let height = this.props.height || 60
-      let color = this.props.color || COLORS.GC_FOOTER_BKG
-      if (!this.props.back) {
-         return (
-            //20250822 added SafeAreaView - edges for pusing up footer above navigation bar at the bottom 
-            //...Otherwise footer hides navigation bar at the bottom for new samsung devices
-            <SafeAreaView edges={['bottom']} style={{ backgroundColor: color, paddingTop: 0 }}>
-               <FooterGBC style={[{ height: height, backgroundColor: color }, this.props.style]}>
-                  {this.props.children}
-               </FooterGBC>
-            </SafeAreaView>
-         )
-      }
-      else {
-         return (
-            //20250822 added SafeAreaView - edges for pusing up footer above navigation bar at the bottom 
-            //...Otherwise footer hides navigation bar at the bottom for new samsung devices
-            <SafeAreaView edges={['bottom']}>
-               <FooterGBC style={[{ height: height, backgroundColor: color }, this.props.style]}>
-                  <FooterLeft>
-                     <PrjIconButton id='ARROW_BACK_FOOTER'
-                        onPress={() => {
-                           if (typeof this.props.back === 'function') { this.props.back() }
-                           else { this.props.navigation.goBack() }
-                        }} />
-                  </FooterLeft>
-                  <FooterBody buttons>{this.props.children}</FooterBody>
-                  <FooterRight />
-               </FooterGBC>
-            </SafeAreaView>
-         )
-      }
+   if (!back) {
+      return (
+         //20250822 added SafeAreaView - edges for pusing up footer above navigation bar at the bottom 
+         //...Otherwise footer hides navigation bar at the bottom for new samsung devices
+         <SafeAreaView edges={['bottom']} style={{ backgroundColor: finalColor, paddingTop: 0 }}>
+            <FooterGBC style={[{ height: finalHeight, backgroundColor: finalColor }, style]}>
+               {children}
+            </FooterGBC>
+         </SafeAreaView>
+      )
+   }
+   else {
+      return (
+         //20250822 added SafeAreaView - edges for pusing up footer above navigation bar at the bottom 
+         //...Otherwise footer hides navigation bar at the bottom for new samsung devices
+         <SafeAreaView edges={['bottom']}>
+            <FooterGBC style={[{ height: finalHeight, backgroundColor: finalColor }, style]}>
+               <FooterLeft>
+                  <PrjIconButton id='ARROW_BACK_FOOTER'
+                     onPress={() => {
+                        if (typeof back === 'function') { back() }
+                        else { navigation.goBack() }
+                     }} />
+               </FooterLeft>
+               <FooterBody>{children}</FooterBody>
+               <FooterRight />
+            </FooterGBC>
+         </SafeAreaView>
+      )
    }
 }//end GCFooter
 
-const styles = StyleSheet.create({
-
-   footer: {
-      justifyContent: 'space-evenly',// 20220810 used to be space-between
-      flexDirection: 'row',
-      alignItems: 'center',
-      elevation: 0, //native base seems to set elevation to 3 by default .. we don't want
-   },
-   body: {
-      flex: .8,
-      flexDirection: 'row',
-      justifyContent: 'space-evenly'
-   },
-   left: {
-      flex: .1
-   },
-   right: {
-      flex: .1
-   },
-
-})
-
-
-export default withNavigation(GCFooter)
-
+export default GCFooter

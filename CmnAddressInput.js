@@ -12,7 +12,7 @@ import GCHeader from 'DWcmn/GCHeader'
 import { GCUserTextWithPlaceholder } from 'DWcmn/Gc'
 import { GCPencil } from './Gc';
 import { CmnTouchableEdit } from 'DWcmn/CmnTouchableEdit'
-import GCFooterForIcons, { GCFooterCmdIcon } from 'DWcmn/GCFooterForIcons'
+import { GCFooterForIcons, GCFooterCmdIcon } from 'DWcmn/GCFooterForIcons'
 import { COLORS } from 'DWcmn/Global'
 import { GCI18n, GCText } from './Gc';
 import { PrjFabMapCurrPos } from 'DWcmn/PrjFab'

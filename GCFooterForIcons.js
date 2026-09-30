@@ -1,6 +1,4 @@
-import React, { Component } from 'react'
-import { StyleSheet } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import React from 'react'
 
 import { PRJ_STYLES } from 'DWcmn/PrjStyles'
 import { COLORS } from 'DWcmn/Global'
@@ -18,15 +16,12 @@ import { PrjIconWithText } from './PrjIconComponents'
 //prop onPress for the button press
 //NOTE no back //TODO check ... use is removed
 //NOTE does NOT pass any other properties to GCFooter
-export class GCFooterWithSingleIcon extends Component {
-
-   render() {
-      return (
-         <GCFooterForIcons hide={this.props.hide} back={this.props.back}>
-            <GCFooterCmdIcon code={this.props.code || 'NEXT_IS_OKAY'} onPress={this.props.onPress} />
-         </GCFooterForIcons>
-      )
-   }//end GCFooter
+export function GCFooterWithSingleIcon({ hide, back, code, onPress }) {
+   return (
+      <GCFooterForIcons hide={hide} back={back}>
+         <GCFooterCmdIcon code={code || 'NEXT_IS_OKAY'} onPress={onPress} />
+      </GCFooterForIcons>
+   )
 }
 
 //GCFooterWithTwoIcons
@@ -39,17 +34,14 @@ export class GCFooterWithSingleIcon extends Component {
 //prop hide hides the footer
 //NOTE that this component replace FooterButtonDouble which used disable prop
 //     but others use hide ... we support both ... same meaning
-export class GCFooterWithTwoIcons extends Component {
-
-   render() {
-      if (this.props.disable || this.props.hide) return (null)
-      return (
-         <GCFooterForIcons hide={this.props.hide} back={this.props.back}>
-            {this.props.onCancel && <GCFooterCmdIcon code={this.props.onCancelCode || 'PREV_IS_CANCEL'} onPress={this.props.onCancel} />}
-            {this.props.onOkay && <GCFooterCmdIcon code={this.props.onOkayCode || 'NEXT_IS_OKAY'} onPress={this.props.onOkay} />}
-         </GCFooterForIcons>
-      )
-   }//end GCFooterWithTwoIcons
+export function GCFooterWithTwoIcons({ disable, hide, back, onCancel, onCancelCode, onOkay, onOkayCode }) {
+   if (disable || hide) return (null)
+   return (
+      <GCFooterForIcons hide={hide} back={back}>
+         {onCancel && <GCFooterCmdIcon code={onCancelCode || 'PREV_IS_CANCEL'} onPress={onCancel} />}
+         {onOkay && <GCFooterCmdIcon code={onOkayCode || 'NEXT_IS_OKAY'} onPress={onOkay} />}
+      </GCFooterForIcons>
+   )
 }
 
 //GCFooterForIcons
@@ -58,39 +50,24 @@ export class GCFooterWithTwoIcons extends Component {
 //prop hide
 //NOTE does NOT pass any other properties to GCFooter
 //TODO check color is NOT used in GCFooter
-class GCFooterForIcons extends Component {
-
-   render() {
-
-      if (this.props.disable || this.props.hide) return (null)
-      return (
-         <GCFooter back={this.props.back} color={COLORS.GC_FOOTER_ICON_BKG}>
-            {this.props.children}
-         </GCFooter>
-      )
-   }
-}//end GCFooter
-
+export function GCFooterForIcons({ disable, hide, back, children }) {
+   if (disable || hide) return (null)
+   return (
+      <GCFooter back={back} color={COLORS.GC_FOOTER_ICON_BKG}>
+         {children}
+      </GCFooter>
+   )
+}
 
 //prop code NOTE this is the key to the ICONS_WITH_TEXT table in Global
 //prop onPress
-export class GCFooterCmdIcon extends Component {
-   render() {
-      return (
-         <PrjIconWithText
-            code={this.props.code}
-            iconStyle={PRJ_STYLES.footerIcon}
-            textStyle={PRJ_STYLES.footerIconText}
-            onPress={this.props.onPress}
-         />
-      )
-   }
-}//end GCFooterCmdIcon
-
-const styles = StyleSheet.create({
-
-})
-
-
-export default withNavigation(GCFooterForIcons)
-
+export function GCFooterCmdIcon({ code, onPress }) {
+   return (
+      <PrjIconWithText
+         code={code}
+         iconStyle={PRJ_STYLES.footerIcon}
+         textStyle={PRJ_STYLES.footerIconText}
+         onPress={onPress}
+      />
+   )
+}

@@ -89,6 +89,16 @@ export const PrjFabMapCurrPos = ({
   />
 );
 
+//prop onPress()
+export const PrjFabMapShowAll = ({ onPress }) => (
+  <PrjFab
+    icon="MAP_SHOW_ALL"
+    color={COLORS.GC_MAP_FAB_SHOWALL}
+    position="topRight"
+    onPress={onPress}
+  />
+);
+
 
 const styles = StyleSheet.create({
 
