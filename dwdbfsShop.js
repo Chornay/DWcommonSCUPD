@@ -157,6 +157,14 @@ export async function dwdbfsShopGetPriceList(shopId) {
    catch { (error => prjAlert(error.message)); }
 }// end dwdbfsShopGetPriceList
 
+export async function dwdbfsShopGetPriceListThrows(shopId) {
+   const priceListDoc = await firestore().collection('PriceLists').doc(shopId).get({ source: 'server' });
+   if (!priceListDoc.exists) {
+      throw new Error(`No price list found for shop ${shopId}`)
+   }
+   return priceListDoc.data()
+}// end dwdbfsShopGetPriceListThrows
+
 //throws errors
 export async function dwdbfsShopGetRoutesAsArray(shopId, startTime, endTime) {
    const querySnapshot = await firestore().collection("ShopTop").doc(shopId).collection("Routes")

@@ -118,6 +118,16 @@ export async function dwdbfsOrderGetById(orderId) {
    catch (error) { prjAlert(error.message); }
 }// end dwdbfsOrderGetById
 
+export async function dwdbfsOrderGetByIdThrows(orderId) {
+   const orderDoc = await firestore().collection('Orders').doc(orderId).get();
+   if (orderDoc.exists) {
+      return dwdbfsOrderExtract(orderDoc.data())
+   }
+   else {
+      throw new Error(`Order not found (${orderId})`)
+   }
+}// end dwdbfsOrderGetByIdThrows
+
 
 //run a transaction to get the next sequential customer id
 //by incrementing Counters.SHOP-xxxxx.lastAlloc
@@ -598,8 +608,8 @@ export async function dwdbfsOrderAddNew(fauxOrder) {
       newRef = firestore().collection('Orders').doc(orderId.toString())
       trnx.set(newRef, obj)
 
-      if (['applies','maybe'].includes (fauxOrder.couponStatus)){
-      await trnx.update(firestore().collection("Coupons").doc(fauxOrder.coupon.docId), {'isUsed':true })
+      if (['applies', 'maybe'].includes(fauxOrder.couponStatus)) {
+         await trnx.update(firestore().collection("Coupons").doc(fauxOrder.coupon.docId), { 'isUsed': true })
 
       }
 

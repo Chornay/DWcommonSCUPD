@@ -182,13 +182,13 @@ export async function dwdbfsOrderGetByQrCode(qrCode) {
 }// end dwdbfsOrderGetByQrCode
 
 export async function dwdbfsOrderGetByQrCodeThrows(qrCode) {
-      const querySnapshot = await firestore().collection('Orders').where('codeFromQr', "==", qrCode.toString()).limit(1).get();
-      if (querySnapshot.empty) {
-         return null
-      }
-      else {
-         return dwdbfsOrderExtract(querySnapshot.docs[0].data())
-      }
+   const querySnapshot = await firestore().collection('Orders').where('codeFromQr', "==", qrCode.toString()).limit(1).get();
+   if (querySnapshot.empty) {
+      return null
+   }
+   else {
+      return dwdbfsOrderExtract(querySnapshot.docs[0].data())
+   }
 }// end dwdbfsOrderGetByQrCodeThrows
 
 //throws errors
@@ -243,11 +243,11 @@ export async function dwdbfsOrderUpdateFields(orderId, fields) {
 
 //throws errors
 export async function dwdbfsOrderUpdateFieldsThrows(orderId, fields) {
-      await firestore().collection('Orders').doc(orderId).update({
-         ...fields
-      })
-   }
- //end dwdbfsOrderUpdateFieldsThrows
+   await firestore().collection('Orders').doc(orderId).update({
+      ...fields
+   })
+}
+//end dwdbfsOrderUpdateFieldsThrows
 
 
 //Update the record with shop changes
@@ -293,15 +293,10 @@ export async function dwdbfsOrderChange(order, index) {
 //NOTE that price is only used for notification
 export async function dwdbfsOrderAddQrCode(order, codeFromQr) {
    const { id } = order
-   try {
-      await firestore().collection('Orders').doc(id).update({
-         codeFromQr: codeFromQr,
-      })
-   }
-   catch (error) {
-      cmnAlertPopup({ title: strX('cmnNEW.ErrorUpdatingOrder'), text: error.message })
-   }
-}//end dwdbfsOrderUpdateAsApproved
+   await firestore().collection('Orders').doc(id).update({
+      codeFromQr: codeFromQr,
+   })
+}//end dwdbfsOrderAddQrCode
 
 //Update the record with the new item pricing
 //AND update all the pricing fields that may have been recalculated
